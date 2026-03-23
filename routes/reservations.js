@@ -1,7 +1,7 @@
-import expres from 'express'
-import Reservation from '../models/Reservation'
+import express from 'express'
+import Reservation from '../models/Reservation.js'
 
-const router = expres.Router()
+const router = express.Router()
 
 // POST /api/reservations - Crear una nueva reserva
 router.post('/', async (req, res) => {
@@ -21,6 +21,30 @@ router.get('/', async (req, res) => {
         res.json(reservations) // Devuelve las reservas encontradas
     } catch (err) {
         res.status(500).json({ message: 'Error al obtener las reservas', error: err.message }) // Devuelve un error con un código de estado 500 (Internal Server Error)
+    }
+})
+
+// PATCH /api/reservations/:id — actualizar estado de reserva
+router.patch('/:id', async (req, res) => {
+    try {
+        const reservation = await Reservation.findByIdAndUpdate(
+            req.params.id,
+            { status: req.body.status }, // Actualiza solo el campo de estado
+            { new: true } // Devuelve el documento actualizado
+        )
+        res.json(reservation) // Devuelve la reserva actualizada
+    } catch (err) {
+        res.status(400).json({ error: err.message }) // Devuelve un error con un código de estado 400 (Bad Request)
+    }
+})
+
+// DELETE /api/reservations/:id - Eliminar una reserva
+router.delete('/:id', async (req, res) => {
+    try {
+        await Reservation.findByIdAndDelete(req.params.id) // Elimina la reserva con el ID especificado
+        res.json({ message: 'Reserva eliminada' }) // Devuelve un mensaje de éxito
+    } catch (err) {
+        res.status(400).json({ error: err.message }) // Devuelve un error con un código de estado 400 (Bad Request)
     }
 })
 

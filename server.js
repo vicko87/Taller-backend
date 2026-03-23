@@ -2,8 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
-import reservationsRouter from './routes/reservations'
-import contactRouter from './routes/contact'
+import reservationsRouter from './routes/reservations.js'
+import contactRouter from './routes/contact.js'
 
 
 
