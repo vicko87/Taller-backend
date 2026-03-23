@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import reservationsRouter from './routes/reservations.js'
 import contactRouter from './routes/contact.js'
+import authRouter from './routes/auth.js'
 
 
 
@@ -16,6 +17,8 @@ app.use(express.json())
 
 app.use('/api/reservations', reservationsRouter)
 app.use('/api/contact', contactRouter)
+
+app.use('/api/auth', authRouter)
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB conectado'))
